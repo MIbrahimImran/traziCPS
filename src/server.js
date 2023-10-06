@@ -1,6 +1,6 @@
 import fastifyModule from 'fastify';
 import populationRoutes from './routes/populationRoutes.js';
-import { convertCSVtoJSON } from './utilites/csvParserUtil.js';
+import { convertCSVtoJSON } from './utilites/csvToJsonConverter.js';
 
 const fastifyInstance = fastifyModule({ logger: false });
 

@@ -1,4 +1,4 @@
-import { getPopulation, setPopulation } from '../services/populationService.js';
+import populationService from '../services/populationService.js';
 
 async function populationRoutes(fastify, options) {
     
@@ -6,7 +6,7 @@ async function populationRoutes(fastify, options) {
     try {
       const state = request.params.state.toLowerCase();
       const city = request.params.city.toLowerCase();
-      const population = await getPopulation(state, city);
+      const population = await populationService.getPopulation(state, city);
       reply.send({ population });
     } catch (error) {
       reply.status(400).send({ error: error.message });
@@ -23,7 +23,7 @@ async function populationRoutes(fastify, options) {
         throw new Error('Invalid population provided');
       }
       
-      const isNew = await setPopulation(state, city, population);
+      const isNew = await populationService.setPopulation(state, city, population);
       reply.status(isNew ? 201 : 200).send({ status: 'success' });
     } catch (error) {
       reply.status(400).send({ error: error.message });
