@@ -7,8 +7,8 @@ const readCSV = async (filePath) => {
     fs.createReadStream(filePath)
       .pipe(csvParser({ headers: false }))
       .on('data', (row) => {
-        const state = row[0];
-        const city = row[1];
+        const city = row[0];
+        const state = row[1];
         const population = row[2];
 
         if (state && city && population) {
@@ -46,14 +46,21 @@ const writeJSON = async (filePath, data) => {
 const convertCSVtoJSON = async () => {
   try {
     const csvFilePath = './db/city_populations.csv';
-    const jsonFilePath = './db/data.json';
+    const jsonFileDir = './db/states/';
     const data = await readCSV(csvFilePath);
-    await writeJSON(jsonFilePath, data);
-    console.log('CSV data has been successfully converted to JSON and written to data.json');
+    
+    if (!fs.existsSync(jsonFileDir)){
+      fs.mkdirSync(jsonFileDir);
+    }
+
+    for (const stateKey of Object.keys(data)) {
+      const jsonFilePath = `${jsonFileDir}${stateKey}.json`;
+      await writeJSON(jsonFilePath, data[stateKey]);
+      console.log(`Data for ${stateKey} has been successfully written to ${stateKey}.json`);
+    }
   } catch (error) {
     console.error('Error during CSV to JSON conversion:', error);
   }
 };
-
 
 export { convertCSVtoJSON };

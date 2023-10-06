@@ -2,7 +2,7 @@ import fastifyModule from 'fastify';
 import populationRoutes from './routes/populationRoutes.js';
 import { convertCSVtoJSON } from './utilites/csvParserUtil.js';
 
-const fastifyInstance = fastifyModule({ logger: true });
+const fastifyInstance = fastifyModule({ logger: false });
 
 async function setupServer() {
   await convertCSVtoJSON();

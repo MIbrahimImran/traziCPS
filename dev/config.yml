@@ -1,10 +1,22 @@
 config:
-  target: "http://127.0.0.1:5555"
+  target: 'http://127.0.0.1:5555'
   phases:
-    - duration: 15
-      arrivalRate: 100000
+    - duration: 60
+      arrivalRate: 50
+      name: "Warm up the application"
+    # - duration: 60
+    #   arrivalRate: 100
+    #   rampTo: 500
+    #   name: "Ramp up load"
 
 scenarios:
   - flow:
-      - get:
-          url: "/"
+      # - loop:
+      #     - get:
+      #         url: "/api/population/state/Alabama/city/Marion"
+      - loop:
+          - put:
+              url: "/api/population/state/Alabama/city/Marion"
+              headers:
+                Content-Type: "text/plain"
+              body: "5000"
