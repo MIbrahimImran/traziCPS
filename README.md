@@ -3,14 +3,16 @@ v18.17.1
 
 ## Setup Instructions
 Install Required Packages: 
-    Run 'npm install' to install all required packages.
+```
+npm install
+```
 Start the Project: 
-    Run 'npm start' to start the project on port 5555.
+```
+npm start
+```
 
 
 ## Preformance Testing
-- AutoCannon has been used for API testing due to its efficiency in handling HTTP/1.1 benchmarking.
-
 Instructions to run the test
 Install autocannon
 ```
