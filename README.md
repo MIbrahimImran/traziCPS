@@ -28,3 +28,6 @@ Run the following command to test the write API
 ```
 autocannon -c 100 -d 30 -p 1 -m PUT --body "5000" --headers "Content-Type: text/plain" http://127.0.0.1:5555/api/population/state/Florida/city/Orlando
 ```
+
+## Preformance Test Results
+![Project Screenshot](./assets/preformanceTest.png)
