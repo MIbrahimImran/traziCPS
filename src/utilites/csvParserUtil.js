@@ -46,18 +46,32 @@ const writeJSON = async (filePath, data) => {
 const convertCSVtoJSON = async () => {
   try {
     const csvFilePath = './db/city_populations.csv';
-    const jsonFileDir = './db/states/';
     const data = await readCSV(csvFilePath);
-    
-    if (!fs.existsSync(jsonFileDir)){
-      fs.mkdirSync(jsonFileDir);
-    }
 
     for (const stateKey of Object.keys(data)) {
-      const jsonFilePath = `${jsonFileDir}${stateKey}.json`;
-      await writeJSON(jsonFilePath, data[stateKey]);
-      console.log(`Data for ${stateKey} has been successfully written to ${stateKey}.json`);
+      // Create directory for each state if it doesn't exist
+      const stateDir = `./db/states/${stateKey}/`;
+      if (!fs.existsSync(stateDir)) {
+        fs.mkdirSync(stateDir, { recursive: true });
+      }
+
+      const groupedCities = {};
+      
+      for (const cityKey of Object.keys(data[stateKey])) {
+        const initialCharofCity = cityKey.charAt(0).toLowerCase();
+        if (!groupedCities[initialCharofCity]) {
+          groupedCities[initialCharofCity] = {};
+        }
+        groupedCities[initialCharofCity][cityKey] = data[stateKey][cityKey];
+      }
+
+      for (const initialCharofCity of Object.keys(groupedCities)) {
+        const jsonFilePath = `${stateDir}${initialCharofCity}.json`;
+        await writeJSON(jsonFilePath, groupedCities[initialCharofCity]);
+      }
     }
+
+    console.log('CSV to JSON conversion completed successfully!');
   } catch (error) {
     console.error('Error during CSV to JSON conversion:', error);
   }
