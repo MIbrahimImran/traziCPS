@@ -1,6 +1,7 @@
 ## Node Version
 v18.17.1
 
+npm install -g artillery
 
 ## Instructions to start project
 
