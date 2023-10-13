@@ -5,7 +5,7 @@ import { convertCSVtoJSON } from './utilites/csvToJsonConverter.js';
 const fastifyInstance = fastifyModule({ logger: false });
 
 async function setupServer() {
-  await convertCSVtoJSON();
+  // await convertCSVtoJSON();
   fastifyInstance.register(populationRoutes);
 
   try {
